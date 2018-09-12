@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SetUpView">
+        <!--签到背景色-->
+        <attr name="setUpBgColor" format="color"/>
+        <!--线的背景颜色-->
+        <attr name="setUpLineBgColor" format="color"/>
+        <!--放大六边形的线颜色-->
+        <attr name="setUpBigHexagonColor" format="color"/>
+        <!--下方天数字体的颜色-->
+        <attr name="setUpDaysColor" format="color"/>
+        <!--下方天数字体的大小-->
+        <attr name="setUpDaysSize" format="dimension"/>
+    </declare-styleable>
+</resources>
