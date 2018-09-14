@@ -29,7 +29,7 @@ public class SetUpView extends View {
     private static final int DEFAULT_HEIGHT = 85; //默认高度
     private static final int DEFAULT_PADDING = 10; //默认padding值
     private static final int DAYS_MARGIN_TOP = 13; // 文字距离的marginTop值
-    private static final float SETUP_HEXAGON_SCALE = 1F / 6; //六边形的缩放值
+    private static final float SETUP_HEXAGON_SCALE = 1F / 3; //六边形的缩放值
     private static final float SETUP_LINE_BG_SCALE = 1F / 4; //横线的 缩放值
     private static final float SECTION_SCALE = 1.2F / 2; //截面的缩放值
 
@@ -197,25 +197,30 @@ public class SetUpView extends View {
 
     private void calculateCirclePoints() {
         if (days != null) {
-            int viewCount = days.size() + 1;
             //控件宽度中，计算每段距离大小
-            int oncePiece = (mSetUpViewWidth - mHexagonRadius * 2 * viewCount) / viewCount;
+            int oncePiece = mSetUpViewWidth / days.size();
 
             for (int i = 0; i < days.size(); i++) {
                 //每个六边形的 中心点位置
-                Point circlePoint = new Point((i + 1) * oncePiece + ((i + 1) * 2 - 1) * oncePiece, circleY);
+                Point circlePoint = new Point((i+1)*oncePiece-mHexagonRadius, circleY);
                 //小正六边形Path
                 Path smallHexagonPath = new Path();
-                for (int j = 0; j < 6; j++) {
-                    //第一个点
-                    if (j == 1) {
-                        smallHexagonPath.moveTo(circlePoint.x - mHexagonRadius, circlePoint.y);
-                    } else {
-                        //其余5个点
-                        smallHexagonPath.lineTo((float) (circlePoint.x - mHexagonRadius * Math.cos(j*60)),
-                                (float) (circlePoint.y - mHexagonRadius * Math.sin(j*60)));
-                    }
-                }
+//                for (int j = 0; j < 6; j++) {
+//                    //第一个点
+//                    if (j == 0) {
+//                        smallHexagonPath.moveTo(circlePoint.x - mHexagonRadius, circlePoint.y);
+//                    } else {
+//                        //其余5个点
+//                        smallHexagonPath.lineTo((float) (circlePoint.x - mHexagonRadius * Math.cos(j*Math.PI/3)),
+//                                (float) (circlePoint.y - mHexagonRadius * Math.sin(j*Math.PI/3)));
+//                    }
+//                }
+                smallHexagonPath.moveTo(circlePoint.x-mHexagonRadius,circlePoint.y);
+                smallHexagonPath.lineTo((float) (circlePoint.x-mHexagonRadius*Math.cos(Math.PI/3)),(float) (circlePoint.y-mHexagonRadius*Math.sin(Math.PI/3)));
+                smallHexagonPath.lineTo((float) (circlePoint.x+mHexagonRadius*Math.cos(Math.PI/3)),(float) (circlePoint.y-mHexagonRadius*Math.sin(Math.PI/3)));
+                smallHexagonPath.lineTo((float) (circlePoint.x+mHexagonRadius),(float) (circlePoint.y));
+                smallHexagonPath.lineTo((float) (circlePoint.x+mHexagonRadius*Math.cos(Math.PI/3)),(float) (circlePoint.y+mHexagonRadius*Math.sin(Math.PI/3)));
+                smallHexagonPath.lineTo((float) (circlePoint.x-mHexagonRadius*Math.cos(Math.PI/3)),(float) (circlePoint.y+mHexagonRadius*Math.sin(Math.PI/3)));
                 smallHexagonPath.close();
                 centerHexagonPoints.add(circlePoint);
                 mHexagonPaths.add(smallHexagonPath);
